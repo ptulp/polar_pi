@@ -35,9 +35,6 @@
 
 #include "version.h"
 
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    9
-
 #include "ocpn_plugin.h"
 
 #include "PolarDialog.h"
@@ -49,7 +46,7 @@
 
 #define POLAR_TOOL_POSITION    -1          // Request default positioning of toolbar tool
 
-class polar_pi : public opencpn_plugin_19
+class polar_pi : public opencpn_plugin_116
 {
 public:
       polar_pi(void *ppimgr);

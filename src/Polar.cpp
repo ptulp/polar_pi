@@ -1156,16 +1156,16 @@ void Polar::save()
     else // CSV Format
     {
         wxString s = _T( "TWA\\TWS," );
-        for ( int col = 0; col < dlg->m_gridEdit->GetCols(); col++ )
+        for ( int col = 0; col < dlg->m_gridEdit->GetNumberCols(); col++ )
             s <<  dlg->m_gridEdit->GetColLabelValue( col )+_T( "," );
         s.RemoveLast();
         polarFile << s << _T( "\n" );
 
-        for ( int row = 0; row < dlg->m_gridEdit->GetRows(); row++ )
+        for ( int row = 0; row < dlg->m_gridEdit->GetNumberRows(); row++ )
         {
             s = wxEmptyString;
             s <<  dlg->m_gridEdit->GetRowLabelValue( row ) << _T( "," );
-            for ( int col = 0; col < dlg->m_gridEdit->GetCols(); col++ )
+            for ( int col = 0; col < dlg->m_gridEdit->GetNumberCols(); col++ )
                 s << dlg->m_gridEdit->GetCellValue( row,col ) << _T( "," );
 
             s.RemoveLast();

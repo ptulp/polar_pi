@@ -287,7 +287,7 @@ PolarDlg::PolarDlg( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_splitter1->Connect( wxEVT_SIZE, wxSizeEventHandler( PolarDlg::OnSizesplitter1 ), NULL, this );
 	m_splitter1->Connect( wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED, wxSplitterEventHandler( PolarDlg::OnSplitterSashPosChanged ), NULL, this );
 	m_panelPolar->Connect( wxEVT_PAINT, wxPaintEventHandler( PolarDlg::OnPaintPolar ), NULL, this );
-	m_gridEdit->Connect( wxEVT_GRID_CELL_CHANGE, wxGridEventHandler( PolarDlg::OnGridCellChange ), NULL, this );
+	m_gridEdit->Connect( wxEVT_GRID_CELL_CHANGED, wxGridEventHandler( PolarDlg::OnGridCellChange ), NULL, this );
 	m_buttonClearData->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PolarDlg::OnButtonClickClearData ), NULL, this );
 	m_toggleBtnRecord->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( PolarDlg::OnToggleButtonRecord ), NULL, this );
 }
@@ -309,7 +309,7 @@ PolarDlg::~PolarDlg()
 	m_splitter1->Disconnect( wxEVT_SIZE, wxSizeEventHandler( PolarDlg::OnSizesplitter1 ), NULL, this );
 	m_splitter1->Disconnect( wxEVT_COMMAND_SPLITTER_SASH_POS_CHANGED, wxSplitterEventHandler( PolarDlg::OnSplitterSashPosChanged ), NULL, this );
 	m_panelPolar->Disconnect( wxEVT_PAINT, wxPaintEventHandler( PolarDlg::OnPaintPolar ), NULL, this );
-	m_gridEdit->Disconnect( wxEVT_GRID_CELL_CHANGE, wxGridEventHandler( PolarDlg::OnGridCellChange ), NULL, this );
+	m_gridEdit->Disconnect( wxEVT_GRID_CELL_CHANGED, wxGridEventHandler( PolarDlg::OnGridCellChange ), NULL, this );
 	m_buttonClearData->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PolarDlg::OnButtonClickClearData ), NULL, this );
 	m_toggleBtnRecord->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( PolarDlg::OnToggleButtonRecord ), NULL, this );
 	

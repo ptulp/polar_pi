@@ -71,7 +71,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //---------------------------------------------------------------------------------------------------------
 
 polar_pi::polar_pi(void *ppimgr)
-      :opencpn_plugin_19(ppimgr)
+      :opencpn_plugin_116(ppimgr)
 {
       // Create the PlugIn icons
       initialize_images();
@@ -153,12 +153,12 @@ void polar_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 
 int polar_pi::GetAPIVersionMajor()
 {
-      return MY_API_VERSION_MAJOR;
+      return OCPN_API_VERSION_MAJOR;
 }
 
 int polar_pi::GetAPIVersionMinor()
 {
-      return MY_API_VERSION_MINOR;
+      return OCPN_API_VERSION_MINOR;
 }
 
 int polar_pi::GetPlugInVersionMajor()
@@ -178,22 +178,24 @@ wxBitmap *polar_pi::GetPlugInBitmap()
 
 wxString polar_pi::GetCommonName()
 {
-      return _("Polar");
+      //return _("Polar");
+	  
+	 return _T(PLUGIN_COMMON_NAME); 
 }
 
 
 wxString polar_pi::GetShortDescription()
 {
-      return _("Polar PlugIn for OpenCPN");
+   return _(PLUGIN_SHORT_DESCRIPTION);
 }
 
 
 wxString polar_pi::GetLongDescription()
 {
-      return _("Polar PlugIn for OpenCPN\n\
-");
-
+     return _(PLUGIN_LONG_DESCRIPTION);
 }
+
+
 
 
 void polar_pi::SetDefaults(void)
