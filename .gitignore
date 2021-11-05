@@ -1,3 +1,5 @@
 build/
+buildwin/
 src/version.h
 .directory
+po/POTFILES.in.test

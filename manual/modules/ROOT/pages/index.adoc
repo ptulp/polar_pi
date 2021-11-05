@@ -1,0 +1,94 @@
+= Polar
+
+Create your own Polar Files from Instruments
+
+== Links
+
+* Source: https://github.com/ptulp/polar_pi +
+* Maintenance Source: https://github.com/rgleason/polar_pi +
+* Download:https://opencpn.org/OpenCPN/plugins/polar.html +
+* Forum: http://www.cruisersforum.com/forums/f134/plugin-polar-105481.html[CF Polar_pi Thread] +
+
+== 1. What and Why
+
+This plugin can be used to Create, Load, View, Edit and Save polars.
+
+== 2. Install
+
+The OpenCPN Manual has general information in xref:opencpn-plugins:misc:plugin-install.adoc[Plugin Download, Install and Enable] for installing this plugin.
+
+== 3. Standard actions
+
+image::polar-pi-eliminate-zeros.png[]
+
+=== Modes of Operation
+
+The Polar plugin has 4 modes of operation:
+
+. Data from logbooks: This mode will read from all logbooks found in the
+logbook/data directory. If enough data points are found, a polar will be created.
+. Data from NMEA: This mode will read data from the NMEA stream and
+create a Polar from this data.
+. Data from VDR File: This mode will read a given VDR file and will
+use the NMEA messages in the file to create a Polar.
+. Edit Manual: This mode allows the user to create a Polar manually.
+
+It is possible to switch between modes. For instance edit manually a
+Polar and then switch to Data from NMEA and Start Record. This will add
+and update the data for the polar.
+
+=== Data Collection
+
+Data will be collected in 5 degree wind directions and 2 knots of
+windspeed and this information will be saved. 
+
+. The plugin will also interpolate middle steps, eg 6 and 7 degree will be added to the 5 degree step and 8
+and 9 will be added to 10 degree step. The windspeed is divided by 2, so
+column 2 knots hold the speeds from 2 till 3.99 and column 4 knots will
+hold the speeds 4 till 5.99. etc up to 40 knots.
+. If reading in other polar files polar_pi tries to fill in the wind direction
+in 5 degree steps with 2 knots of wind similar to the input from NMEA. The same sampling will be used as above.
+. Polar_pi can read badly formatted polar files with lines of all zeros and
+can save the file out with the zeros removed.
+
+== 4. Create your own Polar File
+
+. Confirm that your Wind and BSP/STW instruments are properly calibrated
+and that the nmea0183 data stream is working properly with full
+sentences and good checksum. Confirm that you can record the data.
+. Record Nmea0183 data while sailing in various wind conditions, at a
+wide range of wind angles, with the same set of sails trimmed properly,
+preferably with a clean bottom, average weight in the boat, and no
+current. 
+. Make several of these recordings for different sea states and sets of sails and reefing.
+. Using Polar_pi load one of the files.
+
+image::polar-load-data.jpeg[]
+
+Load Nmea0183 Recorded Data file
+
+image::polar-open-file.jpeg[]
+
+Open Nmea0183 Recorded Data file
+
+. Edit the file. You will want to normalize the data and make it regular, by eye.
+. Save the file with a new name, using some version of [Boat-Sails-Conditions].pol
+. Now you can use it in Weather_routing as one of your Polar files. 
+
+Note that in Weather__routing you can load multiple polar files such as:
+
+.. Very light wind under power
+.. Light to medium wind under mainsail and genoa
+.. Heavy wind under mainsail and jib, etc.
+
+This plugin does an excellent job of building and preparing polars for use in xref:weather_routing::index.adoc[Weather Routing Plugin].
+
+== 5. Options
+
+image::polar_preference.png[]
+
+== 6. Windows Alternative
+
+Polauto is a fully featured alternative created by by Patrick Tierclin another sailing Frenchman.
+
+* link:https://translate.google.com/translate?hl=en&sl=fr&u=http://www.plaisance-pratique.com/polauto-mesurer-la-polaire-reelle[Polauto (Windows)]
