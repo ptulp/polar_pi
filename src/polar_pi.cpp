@@ -29,6 +29,7 @@
 
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
+#include <wx/glcanvas.h>
 #endif //precompiled headers
 
 #include <wx/tokenzr.h>
@@ -41,6 +42,7 @@
 
 #include "jsonreader.h"
 #include "jsonwriter.h"
+#include "icons.h"
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -54,37 +56,68 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
     delete p;
 }
 
-//---------------------------------------------------------------------------------------------------------
-//
-//    Polar PlugIn Implementation
-//
-//---------------------------------------------------------------------------------------------------------
-
-#include "icons.h"
-
-
-
-//---------------------------------------------------------------------------------------------------------
-//
-//          PlugIn initialization and de-init
-//
-//---------------------------------------------------------------------------------------------------------
 
 polar_pi::polar_pi(void *ppimgr)
       :opencpn_plugin_116(ppimgr)
 {
       // Create the PlugIn icons
       initialize_images();
+	  
+ // From shipdriver to read panel icon file
+    wxFileName fn;
+
+    auto path = GetPluginDataDir("polar_pi");
+    fn.SetPath(path);
+    fn.AppendDir("data");
+    fn.SetFullName("polar_panel.png");
+
+    path = fn.GetFullPath();
+
+    wxInitAllImageHandlers();
+
+    wxLogDebug(wxString("Using icon path: ") + path);
+    if (!wxImage::CanRead(path)) {
+       wxLogDebug("Initiating image handlers.");
+       wxInitAllImageHandlers();
+    }
+
+//From  Jon	
+// if (panelIcon.IsOk()) {
+//       m_panelBitmap = wxBitmap(panelIcon);
+//       m_bPolarShowIcon = true;
+//    }
+//    else {
+//       wxLogWarning("Findit panel icon has NOT been loaded");
+//       m_bPolarShowIcon = false;
+//    }	
+	
+	
+   wxImage panelIcon(path);
+   if (panelIcon.IsOk()) {
+      m_panelBitmap = wxBitmap(panelIcon);
+ //     m_bPolarShowIcon = true;
+   }
+    else {
+       wxLogWarning("Polar_pi panel icon has NOT been loaded");
+       m_bPolarShowIcon = false;
+   }
+	   
+ // End of from Shipdriver	  
+	  
 }
+
 
 polar_pi::~polar_pi(void)
 {
       delete _img_Polar;
 }
 
+//          PlugIn initialization and de-init
+
+
 int polar_pi::Init(void)
 {
-//      printf("polar_pi Init()\n");
+
       AddLocaleCatalog( _T("opencpn-polar_pi") );
 
       // Set some default private member parameters
@@ -104,30 +137,45 @@ int polar_pi::Init(void)
 
       ::wxDisplaySize(&m_display_width, &m_display_height);
 
-      //    Get a pointer to the opencpn configuration object
+      //  Get a pointer to the opencpn configuration object
       m_pconfig = GetOCPNConfigObject();
 
-      //    And load the configuration items
-      LoadConfig();
+     // And load the configuration items
+     LoadConfig();
 
-      // Get a pointer to the opencpn display canvas, to use as a parent for the Polar dialog
+    // Get a pointer to the opencpn display canvas, to use as a parent for the Polar dialog
       m_parent_window = GetOCPNCanvasWindow();
 
-      //    This PlugIn needs a toolbar icon, so request its insertion if enabled locally
-      if(m_bPolarShowIcon)
-		
-// For SVG Icon Use  - Also see three other instances below  Line 216-22  and  Line 272-278  added svg ufdef PLUGIN_USE_SVG
-//#ifdef PLUGIN_USE_SVG
-//       m_leftclick_tool_id = InsertPlugInToolSVG(_T( "Polar" ),
-//            _svg_polar, _svg_polar_rollover, _svg_polar_toggled,
-//             wxITEM_CHECK, _("Polar"), _T( "" ), NULL, POLAR_TOOL_POSITION, 0, // this);
-//#else
-        m_leftclick_tool_id  = InsertPlugInTool (_T(""), _img_Polar, _img_Polar, wxITEM_CHECK, _("Polar"), _T(""), NULL, POLAR_TOOL_POSITION, 0, this);
-//#endif
+
+   //    This PlugIn needs a toolbar icon, so request its insertion if enabled locally
+    //         Create the Context Menu Items
+    //         In order to avoid an ASSERT on msw debug builds,
+    //         we need to create a dummy menu to act as a surrogate parent of the created MenuItems
+    //         The Items will be re-parented when added to the real context menu
+
+   wxMenu dummy_menu;
+     if(m_bPolarShowIcon)
+
+// For SVG Icon Use
+//  Also 2 other instances, Line 216-22  and  272-278  added svg ifdef
+
+#ifdef PLUGIN_USE_SVG
+        // This PlugIn needs a toolbar icon, so request SVG insertion
+  		 //extern "C"  DECL_EXP
+       m_leftclick_tool_id = InsertPlugInToolSVG( _T( "Polar" ),
+            _svg_polar, _svg_polar_toggled, _svg_polar_toggled,
+             wxITEM_CHECK, _("Polar"), _T( "" ), NULL, POLAR_TOOL_POSITION, 0, this);
+#else
+        m_leftclick_tool_id  = InsertPlugInTool( _T(""),
+	       _img_Polar, _img_Polar,
+		    wxITEM_CHECK, _("Polar"), _T( "" ), NULL, POLAR_TOOL_POSITION, 0, this);
+#endif
 
 //      wxMenuItem *pmi = new wxMenuItem(NULL, -1, _("PlugIn Item"));
-//      int miid = AddCanvasContextMenuItem(pmi, (PlugInCallBackFunction )&s_ContextMenuCallback );
+//      int miid = AddCanvasContextMenuItem(pmi, (PlugInCallBackFunction )&s_ContextMenuCallback);
 //      SetCanvasContextMenuItemViz(miid, true);
+
+ 
 
       return (WANTS_TOOLBAR_CALLBACK |
            INSTALLS_TOOLBAR_TOOL     |
@@ -148,6 +196,8 @@ bool polar_pi::DeInit(void)
       return true;
 }
 
+
+// This one does not look right ENGINEBUTTON   Enginestatus???
 void polar_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
       if(message_id == _T("LOGBOOK_ENGINEBUTTON1"))
@@ -177,15 +227,8 @@ int polar_pi::GetPlugInVersionMinor()
       return PLUGIN_VERSION_MINOR;
 }
 
-wxBitmap *polar_pi::GetPlugInBitmap()
-{
-      return _img_Polar;
-}
-
 wxString polar_pi::GetCommonName()
 {
-      //return _("Polar");
-
 	 return _T(PLUGIN_COMMON_NAME);
 }
 
@@ -195,29 +238,30 @@ wxString polar_pi::GetShortDescription()
    return _(PLUGIN_SHORT_DESCRIPTION);
 }
 
-
 wxString polar_pi::GetLongDescription()
 {
      return _(PLUGIN_LONG_DESCRIPTION);
 }
 
+//wxBitmap *polar_pi::GetPlugInBitmap()
+//{
+//      return _img_Polar;
+//}
 
+// Shipdriver uses the polar_panel.png file to make the bitmap.
 
+wxBitmap* polar_pi::GetPlugInBitmap() { return &m_panelBitmap; }
+
+// End of shipdriver process
 
 void polar_pi::SetDefaults(void)
 {
       // If the config somehow says NOT to show the icon, override it so the user gets good feedback
+//      m_bPolarShowIcon = true;
       if(!m_bPolarShowIcon)
       {
-           
-    
-//#ifdef PLUGIN_USE_SVG
-//        m_leftclick_tool_id = InsertPlugInToolSVG(_T( "Polar" ), _svg_polar, _svg_polar_rollover, _svg_polar_toggled,
-//            wxITEM_CHECK, _("Polar"), _T( "" ), NULL, POLAR_TOOL_POSITION, 0, this);
-//#else
-        m_bPolarShowIcon = true;
+//      m_bPolarShowIcon = true;
         m_leftclick_tool_id  = InsertPlugInTool (_T(""), _img_Polar, _img_Polar, wxITEM_CHECK, _("Polar"), _T(""), NULL, POLAR_TOOL_POSITION, 0, this);
-//#endif
       }
 }
 
@@ -264,9 +308,9 @@ void polar_pi::ShowPreferencesDialog( wxWindow* parent )
 //            if(m_bPolarShowIcon != m_pPolarShowIcon->GetValue())
 //            {
 //                  m_bPolarShowIcon= m_pPolarShowIcon->GetValue();
-//  
+//
 //                  if(m_bPolarShowIcon)
-//      m_leftclick_tool_id  = InsertPlugInTool (_T(""), _img_Polar, _img_Polar, wxITEM_CHECK, 
+//      m_leftclick_tool_id  = InsertPlugInTool (_T(""), _img_Polar, _img_Polar, wxITEM_CHECK,
 // _("Polar"), _T(""), NULL, POLAR_TOOL_POSITION, 0, this);
 //
 //                  else
@@ -280,14 +324,15 @@ void polar_pi::ShowPreferencesDialog( wxWindow* parent )
 
                   if(m_pPolarDialog)
                   {
-                    m_pPolarDialog->Destroy();
+//                   m_pPolarDialog->Destroy();
+                      delete m_pPolarDialog;
 
                     m_pPolarDialog = new PolarDialog( m_parent_window, this);
                 /*    m_pPolarDialog->Create ( m_parent_window, this, -1, _("Polar Display Control"), m_Polar_dir,
                                wxPoint( m_Polar_dialog_x, m_Polar_dialog_y), wxSize( m_Polar_dialog_sx,
                                m_Polar_dialog_sy));
 							   */
-                    m_pPolarDialog->Show();                        // Show modeless, so it stays on the screen
+                    m_pPolarDialog->Show();   // Show modeless, so it stays on the screen
                     SetToolbarItemState( m_leftclick_tool_id, true );
                   }
                   else

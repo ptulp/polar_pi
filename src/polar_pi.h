@@ -91,6 +91,10 @@ public:
 
 	  Options			*opt;
 
+	  // From Shipdriver to show listing panel image
+      wxBitmap m_panelBitmap;
+
+
 private:
       bool LoadConfig(void);
       bool SaveConfig(void);
