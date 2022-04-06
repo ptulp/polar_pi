@@ -16,7 +16,7 @@
 #include <wx/progdlg.h>
 #include <wx/gdicmn.h>
 
-#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 #include "polar_pi.h"
 #include "Polar.h"
 

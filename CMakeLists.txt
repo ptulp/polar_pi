@@ -3,7 +3,7 @@
 ## Copyright:   
 ## License:     wxWidgets License
 ##---------------------------------------------------------------------------
-## Frontend Author: Jon Gough  Frontend2 Version: 1.0.194.0  Date:10/03/2022  DD/MM/YYYY       
+## Frontend2 Author: Jon Gough  1.0.194.1  02/04/2022  DD/MM/YYYY       
 ##  buildCI:yes useODAPI:no validateJSON:no  
 ## ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
@@ -43,9 +43,9 @@ set(LONG_DESCRIPTION "Polar Plugin reads VDR data files directly, reads from Ope
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "1")
-set(VERSION_PATCH "25")
+set(VERSION_PATCH "27")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "14/03/2022")# DD/MM/YYYY format
+set(VERSION_DATE "02/04/2022")# DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -54,8 +54,8 @@ set(TP_COMMENT "  * Release for O5 using CI")
 set(PARENT "opencpn")
 
 #Used to set up a local webserver with git loaded, for testing purposes.
-# The default is shown below, but it is done in cmake/pluginconfigure.cmake now.
-# This default is needed to build locally and to build flatpak.
+#Now set in plugin configure, needed to build flatpak, also locally.
+
 #set(GIT_REPOSITORY_SERVER "github.com")
 
 #No longer needed, queried.
@@ -137,13 +137,13 @@ SET(SRCS
             src/Polar.cpp
             src/icons.h 
             src/icons.cpp
-	        src/jsonreader.h
-	        src/jsonreader.cpp
-	        src/jsonwriter.h
-	        src/jsonwriter.cpp
-	        src/jsonval.h
-	        src/jsonval.cpp
-	        src/json_defs.h
+#	        src/jsonreader.h
+#	        src/jsonreader.cpp
+#	        src/jsonwriter.h
+#	        src/jsonwriter.cpp
+#	        src/jsonval.h
+#	        src/jsonval.cpp
+#	        src/json_defs.h
 )
 
 SET(HDRS
@@ -153,10 +153,10 @@ SET(HDRS
             src/Options.h			
             src/Polar.h
             src/icons.h 
-	        src/jsonreader.h
-	        src/jsonwriter.h
-	        src/jsonval.h
-	        src/json_defs.h
+#	        src/jsonreader.h
+#	        src/jsonwriter.h
+#	        src/jsonval.h
+#	        src/json_defs.h
 )
 #set(OCPNSRC
 #    ocpnsrc/cutil.cpp
@@ -192,7 +192,8 @@ set(LIBHDRS
     libs/wxJSON/include/jsonval.h
     libs/wxJSON/include/jsonwriter.h)
 
-
+# Tried to use Standard libs/nmea0183 but it is different
+# Also causes errors "m_nmea0183"  not defined, etc.
 SET(SRC_LNMEA0183
 		src/nmea0183/LatLong.hpp
 		src/nmea0183/latlong.cpp
@@ -274,7 +275,8 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/src/nmea0183)
-
+# Tried but causes errors m_nmea0183 not defined, etc.
+#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/nmea0183)
 
 
 ## ----- Change below to match project requirements for android build ----- ##
@@ -291,22 +293,20 @@ endif(QT_ANDROID)
 #target_sources(${PACKAGE_NAME} PUBLIC ${SRC_POLAR} ${SRC_LNMEA0183} ${EXTSRC} ${LIBSSRC})
 ## target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
 
-#target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
+#target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC} ${SRC_LNMEA0183} )
 ##=================================================
-target_sources(${PACKAGE_NAME} PUBLIC ${SRCS}  ${HDRS} ${SRC_LNMEA0183} ${EXTSRC})
+target_sources(${PACKAGE_NAME} PUBLIC ${SRCS}  ${HDRS}  ${EXTSRC} ${LIBSSRC} ${SRC_LNMEA0183})
 ##=================================================
 
 if(NOT OCPN_FLATPAK_CONFIG)
-
+    # Build environment not available when flatpak is being configured so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
-	
-#    add_subdirectory(libs/nmea0183)
+    
 #    add_subdirectory(libs/tinyxml)
+#    add_subdirectory(libs/nmea0183)
 
-#    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
-#    target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
-	
-
+#   target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+#   target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)   
 endif(NOT OCPN_FLATPAK_CONFIG)
 	
 add_definitions(-DTIXML_USE_STL)
