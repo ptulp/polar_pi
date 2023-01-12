@@ -3,7 +3,7 @@
 ## Copyright:   
 ## License:     wxWidgets License
 ##---------------------------------------------------------------------------
-## Frontend2 Author: Jon Gough  1.0.213.0  17/06/2022  DD/MM/YYYY       
+## Frontend2 Author: Jon Gough  1.0.222.0  25/12/2022  DD/MM/YYYY       
 ##  buildCI:yes useODAPI:no validateJSON:no  
 ## ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
@@ -43,9 +43,9 @@ set(LONG_DESCRIPTION "Polar Plugin reads VDR data files directly, reads from Ope
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "1")
-set(VERSION_PATCH "29")
+set(VERSION_PATCH "30")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "17/06/2022")# DD/MM/YYYY format
+set(VERSION_DATE "25/12/2022")# DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
