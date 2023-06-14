@@ -26,6 +26,7 @@
 #include <wx/tglbtn.h>
 #include <wx/splitter.h>
 #include <wx/dialog.h>
+#include <wx/frame.h>
 #include <wx/gauge.h>
 #include <wx/checkbox.h>
 #include <wx/bitmap.h>
@@ -39,7 +40,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PolarDlg
 ///////////////////////////////////////////////////////////////////////////////
-class PolarDlg : public wxDialog
+class PolarDlg : public wxFrame
 {
 	private:
 	

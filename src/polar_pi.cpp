@@ -80,26 +80,13 @@ polar_pi::polar_pi(void *ppimgr)
        wxLogDebug("Initiating image handlers.");
        wxInitAllImageHandlers();
     }
-
-//From  Jon	
-// if (panelIcon.IsOk()) {
-//       m_panelBitmap = wxBitmap(panelIcon);
-//       m_bPolarShowIcon = true;
-//    }
-//    else {
-//       wxLogWarning("Findit panel icon has NOT been loaded");
-//       m_bPolarShowIcon = false;
-//    }	
-	
 	
    wxImage panelIcon(path);
    if (panelIcon.IsOk()) {
       m_panelBitmap = wxBitmap(panelIcon);
- //     m_bPolarShowIcon = true;
    }
     else {
        wxLogWarning("Polar_pi panel icon has NOT been loaded");
-       m_bPolarShowIcon = false;
    }
 	   
  // End of from Shipdriver	  
@@ -154,10 +141,7 @@ int polar_pi::Init(void)
     //         The Items will be re-parented when added to the real context menu
 
    wxMenu dummy_menu;
-     if(m_bPolarShowIcon)
-
 // For SVG Icon Use
-//  Also 2 other instances, Line 216-22  and  272-278  added svg ifdef
 
 #ifdef PLUGIN_USE_SVG
         // This PlugIn needs a toolbar icon, so request SVG insertion
@@ -254,18 +238,6 @@ wxBitmap* polar_pi::GetPlugInBitmap() { return &m_panelBitmap; }
 
 // End of shipdriver process
 
-void polar_pi::SetDefaults(void)
-{
-      // If the config somehow says NOT to show the icon, override it so the user gets good feedback
-//      m_bPolarShowIcon = true;
-      if(!m_bPolarShowIcon)
-      {
-//      m_bPolarShowIcon = true;
-        m_leftclick_tool_id  = InsertPlugInTool (_T(""), _img_Polar, _img_Polar, wxITEM_CHECK, _("Polar"), _T(""), NULL, POLAR_TOOL_POSITION, 0, this);
-      }
-}
-
-
 int polar_pi::GetToolbarToolCount(void)
 {
       return 1;
@@ -292,7 +264,6 @@ void polar_pi::ShowPreferencesDialog( wxWindow* parent )
     m_pPolarUseMS = new wxCheckBox( dialog, -1, _("Show metres/sec for Wind Speed"));
     itemStaticBoxSizerPolar->Add(m_pPolarUseMS, 1, wxALIGN_LEFT|wxALL, border_size);
 
-    //m_pPolarShowIcon->SetValue(m_bPolarShowIcon);
     m_pPolarUseMS->SetValue(m_bPolarUseMS);
 
 
@@ -303,21 +274,6 @@ void polar_pi::ShowPreferencesDialog( wxWindow* parent )
 
       if(dialog->ShowModal() == wxID_OK)
       {
-
-            //    Show Icon changed value?
-//            if(m_bPolarShowIcon != m_pPolarShowIcon->GetValue())
-//            {
-//                  m_bPolarShowIcon= m_pPolarShowIcon->GetValue();
-//
-//                  if(m_bPolarShowIcon)
-//      m_leftclick_tool_id  = InsertPlugInTool (_T(""), _img_Polar, _img_Polar, wxITEM_CHECK,
-// _("Polar"), _T(""), NULL, POLAR_TOOL_POSITION, 0, this);
-//
-//                  else
-//                        RemovePlugInTool(m_leftclick_tool_id);
-//            }
-
-
             if(m_bPolarUseMS != m_pPolarUseMS->GetValue())
             {
                   m_bPolarUseMS = m_pPolarUseMS->GetValue();
@@ -456,7 +412,6 @@ bool polar_pi::LoadConfig(void)
       if(pConf)
       {
             pConf->SetPath ( _T( "/PlugIns/Polar" ) );
-            //pConf->Read ( _T( "ShowPolarIcon" ),  &m_bPolarShowIcon, 1 );
 
             pConf->Read ( _T( "PolarUseMS" ),     &m_bPolarUseMS, 0 );
 
@@ -506,7 +461,6 @@ bool polar_pi::SaveConfig(void)
       if(pConf)
       {
             pConf->SetPath ( _T ( "/Plugins/Polar" ) );
-            //pConf->Write ( _T ( "ShowPolarIcon" ), m_bPolarShowIcon );
             pConf->Write ( _T ( "PolarUseMS" ),    m_bPolarUseMS );
 
             pConf->Write ( _T ( "PolarDialogSizeX" ),  m_Polar_dialog_sx );

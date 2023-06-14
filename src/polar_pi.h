@@ -64,9 +64,7 @@ public:
       wxString GetCommonName();
       wxString GetShortDescription();
       wxString GetLongDescription();
-
-      void SetDefaults(void);
-
+      
       int GetToolbarToolCount(void);
       void ShowPreferencesDialog( wxWindow* parent );
       void OnToolbarToolCallback(int id);
@@ -112,7 +110,6 @@ private:
       int              m_Polar_dialog_sx, m_Polar_dialog_sy;
       wxString         m_Polar_dir;
 
-      bool              m_bPolarShowIcon;
       bool              m_bPolarUseMS;
 
       //    Controls added to Preferences panel

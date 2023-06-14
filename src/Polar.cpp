@@ -378,11 +378,13 @@ void Polar::createDiagram( wxDC& dc )
 
 void Polar::Render()
 {
+    wxColor bgd = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOW);
+    wxColor fgd = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOWTEXT);
     if ( mode == 0 )
     {
 //		dc->DrawText(_("Testing, work in progress..."), 40, 60);
 
-        dc->SetPen( wxPen( wxColor( 0,0,0 ), 1 ) );
+        dc->SetPen( wxPen( fgd, 1 ) );
         dc->SetBrush( wxBrush( wxColour( 255,0,0 ) ) );
         dc->DrawCircle( wxPoint( 40,90 ), 5 );
         dc->DrawText( _( "less than 3 entries found" ), 60, 80 );
@@ -397,8 +399,9 @@ void Polar::Render()
     else
     {
 //		dc->DrawText(_("Testing, work in progress..."), 40, 60);
-
-        dc->SetPen( wxPen( wxColor( 0,0,0 ), 1 ) );
+        dc->SetBackground( bgd );
+        dc->Clear();
+        dc->SetPen( wxPen( fgd, 1 ) );
         dc->SetBrush( wxBrush( windColor[0] ) );
         dc->DrawCircle( wxPoint( 10,90 ), 5 );
         dc->DrawText( _( "2kts" ), 20, 83 );
@@ -459,7 +462,7 @@ void Polar::Render()
         dc->SetBrush( wxBrush( windColor[19] ) );
         dc->DrawCircle( wxPoint( 10,470 ), 5 );
         dc->DrawText( _( "40kts" ), 20, 463 );
-        dc->SetBrush( wxBrush( wxColour( 255,255,255 ) ) );
+        dc->SetBrush( wxBrush( bgd ) );
     }
     int xknt, yknt;
     for ( int i = knots-1; i >= 0; i-- )
@@ -506,7 +509,7 @@ void Polar::Render()
         //	if(angle <= 180)
         dc->DrawText( wxString::Format( _T( "%i\xB0" ),angle ), wxPoint( xt,yt ) );
         //	else
-        //	dc->DrawText(wxString::Format(_T("%i°"),angle), wxPoint(xt-25,yt));
+        //	dc->DrawText(wxString::Format(_T("%iï¿½"),angle), wxPoint(xt-25,yt));
 
     }
 

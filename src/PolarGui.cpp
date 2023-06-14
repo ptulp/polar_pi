@@ -9,7 +9,7 @@
 #include "Polar.h"
 ///////////////////////////////////////////////////////////////////////////
 
-PolarDlg::PolarDlg( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+PolarDlg::PolarDlg( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 //	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	this->SetSizeHints( wxSize(-1,-1), wxDefaultSize );

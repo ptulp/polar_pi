@@ -5,9 +5,11 @@
 #include <math.h>  
 #define PI 3.14159265
 
+#define POLAR_DLG_STYLE wxCAPTION | wxRESIZE_BORDER | wxCLIP_CHILDREN | wxFRAME_FLOAT_ON_PARENT
+
 PolarDialog::PolarDialog( wxWindow* parent, polar_pi* pol )
 :
-PolarDlg( parent )
+PolarDlg( parent, wxID_ANY, _("Polar Diagram"), wxDefaultPosition, wxSize(1024,602), POLAR_DLG_STYLE )
 {
 	plugin = pol;
 	polar = new Polar(this);

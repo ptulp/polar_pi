@@ -3,7 +3,7 @@
 ## Copyright:   
 ## License:     wxWidgets License
 ##---------------------------------------------------------------------------
-## Frontend2 Author: Jon Gough  1.0.222.0  25/12/2022  DD/MM/YYYY       
+## Frontend2 Author: Jon Gough  1.0.238.0  09/06/2023") # DD/MM/YYYY format    
 ##  buildCI:yes useODAPI:no validateJSON:no  
 ## ---------------------------------------------------------------------------
 ## ----- When changing this file do NOT change the order in which sections occur        ----- ##
@@ -42,14 +42,14 @@ set(SHORT_DESCRIPTION "Polar Plugin makes polar diagrams for Weather Routing Pre
 set(LONG_DESCRIPTION "Polar Plugin reads VDR data files directly, reads from Opencpn input Nmea channel (Record Start/Stop at bottom) and direct from LogBoookKonni records, to creates a polar diagram which can then be edited manually, saved or loaded as a Boat Polar file. The LogbookKonni selection has several options.")
 
 set(VERSION_MAJOR "1")
-set(VERSION_MINOR "1")
-set(VERSION_PATCH "30")
+set(VERSION_MINOR "2")
+set(VERSION_PATCH "5")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "25/12/2022")# DD/MM/YYYY format
-set(OCPN_MIN_VERSION "ov50")
+set(VERSION_DATE "10/06/2023")# DD/MM/YYYY format
+set(OCPN_MIN_VERSION "ov58")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
-set(TP_COMMENT "  * Release for O5 using CI")
+set(TP_COMMENT "  * Release for O571 or O58 using CI")
 
 set(PARENT "opencpn")
 
@@ -70,8 +70,8 @@ set(ALPHA "alpha")  #Standard Repos
 # set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
 set (CLOUDSMITH_BASE_REPOSITORY "polar")  #without the pi 
 
-#set(CLOUDSMITH_USER "rick-gleason")
 set(CLOUDSMITH_USER "opencpn")
+#set(CLOUDSMITH_USER "rick-gleason")
 
 set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/polar.html")
 set(XML_SUMMARY ${SHORT_DESCRIPTION})
@@ -276,15 +276,15 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/src/nmea0183)
 # Tried but causes errors m_nmea0183 not defined, etc.
-#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/nmea0183)
+# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/nmea0183)
 
 
 ## ----- Change below to match project requirements for android build ----- ##
 
 
-if(QT_ANDROID)
-    include_directories( ${PROJECT_SOURCE_DIR}/extinclude/GLES2)
-endif(QT_ANDROID)
+#if(QT_ANDROID)
+#    include_directories( ${PROJECT_SOURCE_DIR}/extinclude/GLES2)
+#endif(QT_ANDROID)
 
 ## ----- Change above to match project requirements for android build ----- ##
 
