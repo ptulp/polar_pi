@@ -3,18 +3,19 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-03 14:01-0500\n"
-"PO-Revision-Date: 2018-03-11 10:37-0400\n"
-"Last-Translator: nohal <pavel@kalian.cz>\n"
+"PO-Revision-Date: 2023-10-19 09:17\n"
+"Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /plugins/polar_pi/po/polar_pi.pot\n"
+"X-Crowdin-File-ID: 163\n"
 
 #: src/polar_pi.cpp:120 src/polar_pi.cpp:182 src/polar_pi.cpp:208
 #: src/polar_pi.cpp:230 src/polar_pi.cpp:259
@@ -23,11 +24,11 @@ msgstr "Polaire"
 
 #: src/polar_pi.cpp:188
 msgid "Polar PlugIn for OpenCPN"
-msgstr "Complément Polaire pour OpenCPN permettant de réaliser des polaires de vitesses de son navire"
+msgstr "Plugin polaire pour OpenCPN"
 
 #: src/polar_pi.cpp:194
 msgid "Polar PlugIn for OpenCPN\n"
-msgstr "Complément Polaire pour OpenCPN permettant de réaliser des polaires de vitesse de son navire\n"
+msgstr "Plugin polaire pour OpenCPN\n"
 
 #: src/polar_pi.cpp:221
 msgid "Polar Preferences"
@@ -440,7 +441,7 @@ msgid "The plugin logbookkonni isn't installed\n\n"
 "The create-button is hidden and the mode isn't useable"
 msgstr "Le plugin logbookkonni n'est pas d'installé\n\n"
 "Il est nécessaire pour recueillir des données/vitesse-vent à partir des livres de bord\n\n"
-"Le bouton créer est caché et cette option est indisponible"
+"Le bouton créer est caché et cette option est indisponibles"
 
 #: src/PolarGui.h:99
 msgid "Polar Diagram"

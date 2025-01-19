@@ -46,7 +46,7 @@
 
 #define POLAR_TOOL_POSITION    -1          // Request default positioning of toolbar tool
 
-class polar_pi : public opencpn_plugin_116
+class polar_pi : public opencpn_plugin_118
 {
 public:
       polar_pi(void *ppimgr);
@@ -60,6 +60,8 @@ public:
       int GetAPIVersionMinor();
       int GetPlugInVersionMajor();
       int GetPlugInVersionMinor();
+      int GetPlugInVersionPatch();
+      int GetPlugInVersionPost();
       wxBitmap *GetPlugInBitmap();
       wxString GetCommonName();
       wxString GetShortDescription();

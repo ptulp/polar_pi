@@ -15,6 +15,7 @@
 #include <wx/stdpaths.h>
 #include <wx/progdlg.h>
 #include <wx/gdicmn.h>
+#include <wx/filename.h>
 
 #include "nmea0183.h"
 #include "polar_pi.h"
@@ -91,6 +92,9 @@ Polar::Polar( PolarDialog* parent )
 #ifdef __WXOSX__
     wxString stdPath  = std_path.GetUserConfigDir();   // should be ~/Library/Preferences
     stdPath += s + _T( "opencpn" );
+#endif
+#ifdef __OCPN__ANDROID__
+    wxString stdPath  = std_path.GetUserDataDir();
 #endif
 
     wxString basePath = stdPath + s + _T( "plugins" ) + s + _T( "logbook" ) + s + _T( "data" ) + s;

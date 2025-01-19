@@ -40,8 +40,8 @@
 #include "Polar.h"
 #include "Options.h"
 
-#include "jsonreader.h"
-#include "jsonwriter.h"
+#include "wx/jsonreader.h"
+#include "wx/jsonwriter.h"
 #include "icons.h"
 
 // the class factories, used to create and destroy instances of the PlugIn
@@ -58,7 +58,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 
 
 polar_pi::polar_pi(void *ppimgr)
-      :opencpn_plugin_116(ppimgr)
+      :opencpn_plugin_118(ppimgr)
 {
       // Create the PlugIn icons
       initialize_images();
@@ -174,8 +174,11 @@ int polar_pi::Init(void)
 bool polar_pi::DeInit(void)
 {
 //      printf("polar_pi DeInit()\n");
-      if(m_pPolarDialog)
-            m_pPolarDialog->Close();
+      if(m_pPolarDialog) {
+        m_pPolarDialog->Close();
+        delete m_pPolarDialog;
+        m_pPolarDialog = NULL;
+      }
 
       return true;
 }
@@ -209,6 +212,16 @@ int polar_pi::GetPlugInVersionMajor()
 int polar_pi::GetPlugInVersionMinor()
 {
       return PLUGIN_VERSION_MINOR;
+}
+
+int polar_pi::GetPlugInVersionPatch()
+{
+      return PLUGIN_VERSION_PATCH;
+}
+
+int polar_pi::GetPlugInVersionPost()
+{
+      return PLUGIN_VERSION_TWEAK;
 }
 
 wxString polar_pi::GetCommonName()

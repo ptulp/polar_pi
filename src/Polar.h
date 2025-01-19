@@ -8,7 +8,7 @@
 #include <wx/dynarray.h>
 #include <map>
 
-#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 
 WX_DEFINE_ARRAY_DOUBLE(int, ArrayOfDouble);
 
@@ -96,7 +96,7 @@ private:
 	PolarDialog*	dlg;
 	FilterDlg*		filterDlg;
 
-	NMEA0183P       	m_NMEA0183;
+	NMEA0183       	m_NMEA0183;
 
 	wxString		logbookDataPath;
 	wxSize			center;
