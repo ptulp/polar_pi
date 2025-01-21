@@ -162,7 +162,6 @@ SET(HDRS
 )
 
 
-
 add_definitions(-DPLUGIN_USE_SVG)
 
 ## ----- Section above - Add your project SET(SRCS and SET(HDRS  etc.-------##
